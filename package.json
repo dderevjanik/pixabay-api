@@ -1,12 +1,18 @@
 {
   "name": "pixabay-api",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "",
   "main": "dist/Index.js",
   "author": {
     "name": "Daniel Derevjanik",
     "email": "daniel.derevjanik@gmail.com"
   },
+  "keywords": [
+    "pixabay",
+    "api",
+    "free images",
+    "typescript"
+  ],
   "typescript": {
     "definition": "dist/Index.d.ts"
   },
@@ -16,7 +22,7 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "dev": "tsc --watch",
     "build": "tsc",
-    "lint": "tslint -c tslint.json --fix 'src/**/*.ts'"
+    "lint": "tslint -c tslint.json --fix 'lib/**/*.ts'"
   },
   "license": "ISC",
   "devDependencies": {

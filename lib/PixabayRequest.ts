@@ -3,7 +3,7 @@
  */
 export interface BaseRequest {
     /**
-     * (required) str Please login to see your API key here.
+     * (required) Please login to see your API key.
      */
     key?: string;
 }
@@ -23,7 +23,6 @@ export interface ImageRequest extends BaseRequest {
      * Accepted values: cs, da, de, en, es, fr, id, it, hu, nl, no, pl, pt, ro, sk, fi, sv, tr, vi, th, bg, ru, el,
      * ja, ko, zh
      * Default: "en"
-     * TODO: add language codes as literal type
      */
     lang?: string;
 

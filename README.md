@@ -20,13 +20,13 @@ Basic example
 ```js
 import { searchImages } from 'pixabay-api';
 
-pixabay.searchImage('auth_key', {q: 'puppy'});
+pixabay.searchImage('auth_key', 'puppy');
 ```
 
 Bad value for some props will throw an error
 
 ```js
-pixabay.searchImage('auth_key', {per_page: 203});
+pixabay.searchImage('auth_key', 'puppy', {per_page: 203});
 // will throw an error:
 // Error: Request.per_page: '203', but accepted values  3 - 200
 ```
@@ -34,6 +34,17 @@ pixabay.searchImage('auth_key', {per_page: 203});
 To silent those errors, turn validate off
 
 ```js
-pixabay.searchImage('auth_key', {per_page: 203}, false);
+pixabay.searchImage('auth_key', 'puppy', {per_page: 203}, false);
 // Will return bad http request, no error
+```
+
+with **Authenticate** you no longer need to add auth_key within `searchImage`
+
+```js
+import { authenticate } from 'pixabay-api';
+
+const { searchImage } = authenticate('auth_key');
+searchImage('puppy'); // no need to add auth_key
+searchImage('birthday cake');  // no need to add auth_key
+
 ```

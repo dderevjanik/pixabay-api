@@ -7,17 +7,19 @@ import { validateRequest } from './ValidateRequest';
 const PIXABAY_URL = 'https://pixabay.com/api/?';
 
 /**
- * Search for image son pixabay
+ * Search for image on pixabay
  * @param authenticateKey - you can obtain your key by sign up on pixabay
+ * @param searchQuery - search for image names, should not exceed 100 characters
  * @param request - pixabay request
  * @param validate - should validate request ? It'll throw an error if validation fail
  */
-const searchImagesRequest = async (authenticateKey: string, request: ImageRequest, validate: boolean = true) => {
-    request.key = authenticateKey;
+const searchImagesRequest = async (authenticateKey: string, searchQuery: string, options: ImageRequest = {}, validate: boolean = true) => {
+    options.q = QueryString.stringify(searchQuery);
+    options.key = authenticateKey;
     if (validate) {
-        validateRequest(request);
+        validateRequest(options);
     }
-    const response = (await axios.post(PIXABAY_URL + QueryString.stringify(request))).data;
+    const response = (await axios.post(PIXABAY_URL + QueryString.stringify(options))).data;
     if (!response.hits && !response.total && !response.totalHits) {
         // TODO: more descriptive error
         throw new Error('bad response');
@@ -42,8 +44,8 @@ export const authenticate = async (key: string) => ({
      * @param request - pixabay request
      * @param validate - should validate request ? It'll throw an error if validation fail
      */
-    searchImagesRequest: async (request: ImageRequest, validate: boolean = true) =>
-        await searchImagesRequest(key, request, validate),
+    searchImagesRequest: async (searchQuery: string, request: ImageRequest = {}, validate: boolean = true) =>
+        await searchImagesRequest(key, searchQuery, request, validate),
     // TODO: Add search for videos request
     // searchVideosRequest:
 });
@@ -51,3 +53,7 @@ export const authenticate = async (key: string) => ({
 // export const searchVideos = searchVideosRequest;
 
 export const searchImages = searchImagesRequest;
+
+(async function () {
+    console.log(await searchImages('5742108-fe9cf15fad2e97b7952502be3', 'big cake'));
+})();

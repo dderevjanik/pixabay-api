@@ -5,6 +5,6 @@ import { ImageResponse } from './PixabayResponse';
  * @param key - you can obtain your key by sign up on pixabay
  */
 export declare const authenticate: (key: string) => Promise<{
-    searchImagesRequest: (request: ImageRequest, validate?: boolean) => Promise<ImageResponse>;
+    searchImagesRequest: (searchQuery: string, request?: ImageRequest, validate?: boolean) => Promise<ImageResponse>;
 }>;
-export declare const searchImages: (authenticateKey: string, request: ImageRequest, validate?: boolean) => Promise<ImageResponse>;
+export declare const searchImages: (authenticateKey: string, searchQuery: string, options?: ImageRequest, validate?: boolean) => Promise<ImageResponse>;
