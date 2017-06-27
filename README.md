@@ -18,7 +18,7 @@ which can be obtained by [sign up on pixabay.com](https://pixabay.com/en/account
 Basic example
 
 ```js
-const pixabay = require('pixabay-api');
+import { searchImages } from 'pixabay-api';
 
 pixabay.searchImage('auth_key', {q: 'puppy'});
 ```
