@@ -1,6 +1,6 @@
 {
-  "name": "pixabayts",
-  "version": "1.0.0",
+  "name": "pixabay-api",
+  "version": "1.0.1",
   "description": "",
   "main": "dist/Index.js",
   "author": {
@@ -10,6 +10,8 @@
   "typescript": {
     "definition": "dist/Index.d.ts"
   },
+  "types": "dist/Index.d.ts",
+  "typings": "dist/Index.d.ts",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "dev": "tsc --watch",
