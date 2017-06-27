@@ -44,7 +44,7 @@ export const authenticate = async (key: string) => ({
      * @param request - pixabay request
      * @param validate - should validate request ? It'll throw an error if validation fail
      */
-    searchImagesRequest: async (searchQuery: string, request: ImageRequest = {}, validate: boolean = true) =>
+    searchImages: async (searchQuery: string, request: ImageRequest = {}, validate: boolean = true) =>
         await searchImagesRequest(key, searchQuery, request, validate),
     // TODO: Add search for videos request
     // searchVideosRequest:
