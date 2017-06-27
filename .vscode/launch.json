@@ -8,7 +8,10 @@
             "type": "node",
             "request": "launch",
             "name": "Debug",
-            "program": "${workspaceRoot}/dist/Index.js",
+            "program": "${workspaceRoot}/lib/Index.ts",
+            "outFiles": [
+                "${workspaceRoot}/dist/Index.js"
+            ],
             "cwd": "${workspaceRoot}",
             "sourceMaps": true
         },
