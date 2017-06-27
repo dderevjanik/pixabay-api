@@ -38,7 +38,7 @@ const searchImagesRequest = async (authenticateKey: string, searchQuery: string,
  * Authenticate user. You'll no longer need to write auth key on every request call
  * @param key - you can obtain your key by sign up on pixabay
  */
-export const authenticate = async (key: string) => ({
+export const authenticate = (key: string) => ({
     /**
      * Search for image son pixabay
      * @param request - pixabay request
@@ -53,7 +53,3 @@ export const authenticate = async (key: string) => ({
 // export const searchVideos = searchVideosRequest;
 
 export const searchImages = searchImagesRequest;
-
-(async function () {
-    console.log(await searchImages('5742108-fe9cf15fad2e97b7952502be3', 'big cake'));
-})();
