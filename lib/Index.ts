@@ -1,9 +1,7 @@
 import axios from 'axios';
 import * as QueryString from 'querystring';
-import { ImageRequest } from './PixabayRequest';
-import { ImageResponse } from './PixabayResponse';
-import { VideoRequest } from './PixabayRequest';
-import { VideoResponse } from './PixabayResponse';
+import { VideoRequest, ImageRequest } from './PixabayRequest';
+import { VideoResponse, ImageResponse } from './PixabayResponse';
 import { validateRequest } from './ValidateRequest';
 
 const PIXABAY_URL_IMAGES = 'https://pixabay.com/api/?';
