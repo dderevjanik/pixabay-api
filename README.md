@@ -20,7 +20,7 @@ Basic example
 ```js
 import { searchImages } from 'pixabay-api';
 
-searchImages('auth_key', 'puppy');
+searchImages('auth_key', 'puppy').then((r) => console.log(r));
 // { totalHits: 500,
 //   hits:
 //    [ { previewHeight: 99,
@@ -52,7 +52,7 @@ searchImages('auth_key', 'puppy');
 Bad value for some props will throw an error
 
 ```js
-searchImages('auth_key', 'puppy', {per_page: 203});
+await searchImages('auth_key', 'puppy', {per_page: 203});
 // will throw an error:
 // Error: Request.per_page: '203', but accepted values  3 - 200
 ```
@@ -60,7 +60,7 @@ searchImages('auth_key', 'puppy', {per_page: 203});
 To silent those errors, turn validate off
 
 ```js
-searchImages('auth_key', 'puppy', {per_page: 203}, false);
+await searchImages('auth_key', 'puppy', {per_page: 203}, false);
 // Will return bad http request, no error
 ```
 
@@ -70,7 +70,7 @@ with **Authenticate** you no longer need to add auth_key within `searchImages`
 import { authenticate } from 'pixabay-api';
 
 const { searchImages } = authenticate('auth_key');
-searchImages('puppy'); // no need to add auth_key
-searchImages('birthday cake');  // no need to add auth_key
+await searchImages('puppy'); // no need to add auth_key
+await searchImages('birthday cake', {per_page: 20});  // no need to add auth_key
 
 ```
