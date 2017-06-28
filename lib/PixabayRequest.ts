@@ -127,7 +127,8 @@ export interface VideoRequest extends BaseRequest {
      */
     id?: string
 
-    /**	str	Filter results by video type.
+    /**
+     * Filter results by video type.
      * Accepted values: "all", "film", "animation"
      * Default: "all"
      */

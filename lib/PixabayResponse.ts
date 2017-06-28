@@ -149,15 +149,15 @@ export interface VideoHit {
     pageURL: string,
 
     /**
-     * Source page on Pixabay.
+     * Tyoe of the video, film, serail ect.
      */
     type: string,
     /**
-     *
+     * Comma separated list of video tags
      */
     tags: string,
     /**
-     *
+     * video duration
      */
     duration: number,
 
@@ -227,7 +227,7 @@ export interface ImageResponse {
     total: number;
 
     /**
-     * 	The number of videos accessible through the API. By default, the API is limited to return a maximum of 500 videos per query.
+     * The number of videos accessible through the API. By default, the API is limited to return a maximum of 500 videos per query.
      */
     totalHits: number;
 
@@ -246,9 +246,8 @@ export interface VideoResponse {
      */
     total: number;
 
-
     /**
-     * 	The number of videos accessible through the API. By default, the API is limited to return a maximum of 500 videos per query.
+     * The number of videos accessible through the API. By default, the API is limited to return a maximum of 500 videos per query.
      */
     totalHits: number;
 
