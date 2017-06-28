@@ -1,5 +1,7 @@
 # Pixabay-api
 
+![travis_badge](https://travis-ci.org/dderevjanik/pixabay-api.svg?branch=master)
+
 All images and videos on Pixabay are released free of copyrights under Creative Commons CC0. You may download, modify, distribute, and use them royalty free for anything you like, even in commercial applications. Attribution is not required.
 
 Pixabay API docs:  [https://pixabay.com/api/docs/](https://pixabay.com/api/docs/)
@@ -49,7 +51,7 @@ searchImages('auth_key', 'puppy').then((r) => console.log(r));
 // }
 ```
 
-Bad value for some props will throw an error
+Bad values for some props will throw an error
 
 ```js
 await searchImages('auth_key', 'puppy', {per_page: 203});
@@ -57,7 +59,7 @@ await searchImages('auth_key', 'puppy', {per_page: 203});
 // Error: Request.per_page: '203', but accepted values  3 - 200
 ```
 
-To silent those errors, turn validate off
+To suppress those errors, turn off validation
 
 ```js
 await searchImages('auth_key', 'puppy', {per_page: 203}, false);

@@ -7,11 +7,12 @@ import { validateRequest } from './ValidateRequest';
 const PIXABAY_URL = 'https://pixabay.com/api/?';
 
 /**
- * Search for image on pixabay
+ * Search for images on pixabay
  * @param key - you can obtain your authentication key by sign up on pixabay
  * @param searchQuery - search for image names, should not exceed 100 characters
  * @param request - pixabay request
  * @param validate - should validate request ? It'll throw an error if validation fail
+ * @throws {BadResponse}
  */
 const searchImagesRequest = async (key: string, searchQuery: string, options: ImageRequest = {}, validate = true) => {
     options.q = QueryString.stringify(searchQuery);
@@ -19,18 +20,19 @@ const searchImagesRequest = async (key: string, searchQuery: string, options: Im
     if (validate) {
         validateRequest(options);
     }
-    const response = (await axios.post(PIXABAY_URL + QueryString.stringify(options))).data;
-    if (!response.hits && !response.total && !response.totalHits) {
-        // TODO: more descriptive error
-        throw new Error(`Bad response, 'response.hits', 'response.total' or 'response.totalHits' is missing`);
+    const response = await axios.post(PIXABAY_URL + QueryString.stringify(options));
+    const responseData = response.data;
+
+    if (!responseData.hits && !responseData.total && !responseData.totalHits) {
+        throw new Error(`BadResponse: hits total totalHits are missing. make sure that you have right access token.`);
     }
-    return response as ImageResponse;
+    return responseData as ImageResponse;
 };
 
 // TODO: Add  search video request
 
 /**
- * Authenticate user. You'll no longer need to write auth key on every request call
+ * Authenticate user. You'll no longer need to write auth key on every searchImages request
  * @param key - you can obtain your key by sign up on pixabay
  */
 export const authenticate = (key: string) => ({
