@@ -17,6 +17,8 @@ which can be obtained by [sign up on pixabay.com](https://pixabay.com/en/account
 
 ## Examples
 
+### `searchImages(key, query, options, validate = true)`
+
 Basic example
 
 ```js
@@ -51,14 +53,6 @@ searchImages(AUTH_KEY, 'puppy').then((r) => console.log(r));
 // }
 ```
 
-Searching for videos has same interface as searching for images
-
-```js
-import { searchImages } from 'pixabay-api';
-
-searchVideos(AUTH_KEY, 'puppy');
-```
-
 Bad values for some props will throw an error
 
 ```js
@@ -83,7 +77,16 @@ const { searchImages, searchVideos } = authenticate(AUTH_KEY);
 await searchImages('puppy'); // no need to add auth_key
 await searchImages('birthday cake', {per_page: 20});  // no need to add auth_key
 await searchVideos('dog'); // no need to add auth key
+```
 
+### `searchVideos(key, query, options, validate = true)
+
+Searching for videos has same interface as `searchImages`
+
+```js
+import { searchVideos } from 'pixabay-api';
+
+searchVideos(AUTH_KEY, 'puppy');
 ```
 
 ## FAQ
