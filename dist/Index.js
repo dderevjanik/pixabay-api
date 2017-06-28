@@ -1,4 +1,12 @@
 "use strict";
+var __assign = (this && this.__assign) || Object.assign || function(t) {
+    for (var s, i = 1, n = arguments.length; i < n; i++) {
+        s = arguments[i];
+        for (var p in s) if (Object.prototype.hasOwnProperty.call(s, p))
+            t[p] = s[p];
+    }
+    return t;
+};
 var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
     return new (P || (P = Promise))(function (resolve, reject) {
         function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
@@ -45,7 +53,7 @@ var PIXABAY_URL_VIDEOS = 'https://pixabay.com/api/videos?';
  * Search for images on pixabay
  * @param key - you can obtain your authentication key by sign up on pixabay
  * @param searchQuery - search for image names, should not exceed 100 characters
- * @param request - pixabay request
+ * @param request - pixabay request options, for more information visit
  * @param validate - should validate request ? It'll throw an error if validation fail
  * @throws {BadResponse}
  */
@@ -53,17 +61,18 @@ var searchImagesRequest = function (key, searchQuery, options, validate) {
     if (options === void 0) { options = {}; }
     if (validate === void 0) { validate = true; }
     return __awaiter(_this, void 0, void 0, function () {
-        var response, responseData;
+        var requestData, response, responseData;
         return __generator(this, function (_a) {
             switch (_a.label) {
                 case 0:
-
-                    options.q = QueryString.stringify(searchQuery);
-                    options.key = key;
+                    requestData = __assign({}, options, { key: key, 
+                        // return undefined with ordianry sting like 'puppy'
+                        // q: QueryString.stringify(searchQuery),
+                        q: searchQuery });
                     if (validate) {
-                        ValidateRequest_1.validateRequest(options);
+                        ValidateRequest_1.validateRequest(requestData);
                     }
-                    return [4 /*yield*/, axios_1.default.post(PIXABAY_URL_IMAGES + QueryString.stringify(options))];
+                    return [4 /*yield*/, axios_1.default.post(PIXABAY_URL_IMAGES + QueryString.stringify(requestData))];
                 case 1:
                     response = _a.sent();
                     responseData = response.data;
@@ -75,17 +84,18 @@ var searchImagesRequest = function (key, searchQuery, options, validate) {
         });
     });
 };
-
-var searchVideosRequest = function (authenticateKey, searchQuery, options, validate) {
+var searchVideosRequest = function (key, searchQuery, options, validate) {
     if (options === void 0) { options = {}; }
     if (validate === void 0) { validate = true; }
     return __awaiter(_this, void 0, void 0, function () {
-        var response;
+        var requestData, response;
         return __generator(this, function (_a) {
             switch (_a.label) {
                 case 0:
-                    options.q = searchQuery;
-                    options.key = authenticateKey;
+                    requestData = __assign({}, options, { key: key, 
+                        // return undefined with ordianry sting like 'puppy'
+                        // q: QueryString.stringify(searchQuery),
+                        q: searchQuery });
                     if (validate) {
                         ValidateRequest_1.validateRequest(options);
                     }
@@ -93,8 +103,7 @@ var searchVideosRequest = function (authenticateKey, searchQuery, options, valid
                 case 1:
                     response = (_a.sent()).data;
                     if (!response.hits && !response.total && !response.totalHits) {
-                        // TODO: more descriptive error
-                        throw new Error('bad response');
+                        throw new Error("BadResponse: hits total totalHits are missing. make sure that you have right access token.");
                     }
                     return [2 /*return*/, response];
             }
@@ -102,14 +111,16 @@ var searchVideosRequest = function (authenticateKey, searchQuery, options, valid
     });
 };
 /**
- * Authenticate user. You'll no longer need to write auth key on every request call
+ * Authenticate user. You'll no longer need to write auth key on every searchImages or searchVideos request
  * @param key - you can obtain your key by sign up on pixabay
  */
 exports.authenticate = function (key) { return ({
     /**
-     * Search for image son pixabay
-     * @param request - pixabay request
+     * Search for images on pixabay
+     * @param searchQuery - search for image names, should not exceed 100 characters
+     * @param request - pixabay request options, for more information visit https://pixabay.com/api/docs/
      * @param validate - should validate request ? It'll throw an error if validation fail
+     * @throws {BadResponse}
      */
     searchImages: function (searchQuery, request, validate) {
         if (request === void 0) { request = {}; }
@@ -121,7 +132,13 @@ exports.authenticate = function (key) { return ({
             }
         }); });
     },
-
+    /**
+     * Search for videos on pixabay
+     * @param searchQuery - search for image names, should not exceed 100 characters
+     * @param request - pixabay request options, for more information visit https://pixabay.com/api/docs/
+     * @param validate - should validate request ? It'll throw an error if validation fail
+     * @throws {BadResponse}
+     */
     searchVideos: function (searchQuery, request, validate) {
         if (request === void 0) { request = {}; }
         if (validate === void 0) { validate = true; }
@@ -133,4 +150,20 @@ exports.authenticate = function (key) { return ({
         }); });
     },
 }); };
+var searchImages = exports.authenticate('5742108-fe9cf15fad2e97b7952502be3');
+(function () {
+    return __awaiter(this, void 0, void 0, function () {
+        var _a, _b;
+        return __generator(this, function (_c) {
+            switch (_c.label) {
+                case 0:
+                    _b = (_a = console).log;
+                    return [4 /*yield*/, searchImages.searchImages('puppy')];
+                case 1:
+                    _b.apply(_a, [_c.sent()]);
+                    return [2 /*return*/];
+            }
+        });
+    });
+})();
 //# sourceMappingURL=Index.js.map

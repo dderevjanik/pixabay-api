@@ -119,9 +119,10 @@ export interface VideoRequest extends BaseRequest {
     /**
      * Language code of the language to be searched in.
      * Accepted values: cs, da, de, en, es, fr, id, it, hu, nl, no, pl, pt, ro, sk, fi, sv, tr, vi, th, bg, ru, el, ja, ko, zh
-     * Default: "en"
+     * @default "en"
      */
     lang?: string
+
     /**
      * ID or a comma separated list of values for retrieving specific videos.
      */
@@ -130,53 +131,60 @@ export interface VideoRequest extends BaseRequest {
     /**
      * Filter results by video type.
      * Accepted values: "all", "film", "animation"
-     * Default: "all"
+     * @default "all"
      */
     video_type?: string
+
     /**
      * Filter results by category.
      * Accepted values: fashion, nature, backgrounds, science, education, people, feelings, religion, health, places, animals,
      * industry, food, computer, sports, transportation, travel, buildings, business, music
      */
     category?: string
+
     /**
      * Minimum video width.
-     * Default: "0"
+     * @default: 0
      */
     min_width?: number
+
     /**
      * Minimum video height.
-     * Default: "0"
+     * @default 0
      */
-
     min_height?: number
+
     /**
      * Select videos that have received an Editor's Choice award.
      * Accepted values: "true", "false"
-     * Default: "false"
+     * @default false
      */
     editors_choice?: boolean
+
     /**
      * A flag indicating that only videos suitable for all ages should be returned.
      * Accepted values: "true", "false"
-     * Default: "false"
+     * @default false
      */
     safesearch?: boolean
+
     /**
      * How the results should be ordered.
      * Accepted values: "popular", "latest"
-     * Default: "popular"
+     * @default "popular"
      */
     order?: string
+
     /**
      * Returned search results are paginated.Use this parameter to select the page number.
-     * Default: 1
+     * @default: 1
      */
     page?: number
+
     /**
      * Determine the number of results per page.
      * Accepted values: 3 - 200
-     * Default: 20
+     * @default 20
      */
     per_page?: number
 }

@@ -3,13 +3,14 @@
  */
 export interface ImageHit {
     /**
-     * Image Id
+     * 	A unique identifier for updating expired image URLs
      */
     id: number;
     /**
-     * Url to image's page
+     * Source page on Pixabay, which provides a download link for the original image of the
+     * dimension imageWidth x imageHeight and the file size imageSize
      */
-    pageUrl: string;
+    pageURL: string;
     /**
      * Type of image
      */
@@ -19,25 +20,29 @@ export interface ImageHit {
      */
     tags: string;
     /**
-     * Url to image preview
+     * Low resolution images with a maximum width or height of 150 px (previewWidth x previewHeight)
      */
     previewUrl: string;
     /**
-     * Image preview width
+     * Preview image width
      */
     previewWidth: number;
     /**
-     * Image preview height
+     * Preview image height
      */
     previewHeight: number;
     /**
-     * Medium sized image with a maximum width or height of 640 px (webformatWidth x webformatHeight). URL valid for 24 hours.
-     * Replace '_640' in any webformatURL value to access other image sizes:
-     * Replace with '_180' or '_340' to get a 180 or 340 px tall version of the image, respectively. Replace with '_960' to get the image in a maximum dimension of 960 x 720 px.
+     * 	Medium sized image with a maximum width or height of 640 px (webformatWidth x webformatHeight).
+     * URL valid for 24 hours.
      */
     webformatURL: string;
-    /** */
+    /**
+     * Web format width
+     */
     webformatWidth: number;
+    /**
+     * Web format height
+     */
     webformatHeight: number;
     /**
      * Image width
@@ -52,35 +57,35 @@ export interface ImageHit {
      */
     imageSize: number;
     /**
-     * Number of image views
+     * Total number of views
      */
     views: number;
     /**
-     * Number of image downloads
+     * 	Total number of downloads
      */
     downloads: number;
     /**
-     * Number of image favorites
+     * Total number of favorites
      */
     favorites: number;
     /**
-     * Number of image likes
+     * Total number of likes
      */
     likes: number;
     /**
-     * Number of image comments
+     * Total number of comments
      */
     comments: number;
     /**
-     * Created by user id
+     * User ID of the contributor. Profile URL: https://pixabay.com/users/{ USERNAME }-{ ID }
      */
     user_id: number;
     /**
-     * Username
+     * User name of the contributor. Profile URL: https://pixabay.com/users/{ USERNAME }-{ ID }
      */
     user: string;
     /**
-     * User logo
+     * Profile picture URL (250 x 250 px).
      */
     userImageURL: string;
 }
@@ -116,7 +121,7 @@ export interface VideoHit {
      * Available sizes: 100x75, 200x150, 295x166, 640x360, 960x540, 1920x1080
      * Exampe: https://i.vimeocdn.com/video/529927645_295x166.jpg
      */
-    picture_id: number;
+    picture_id: string;
     /**
      * Source page on Pixabay.
      */
@@ -181,7 +186,7 @@ export interface VideoHit {
     userImageURL: string;
 }
 /**
- * Response from image api call pixabay
+ * Response for pixabay image search request
  */
 export interface ImageResponse {
     /**

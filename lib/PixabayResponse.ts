@@ -115,14 +115,17 @@ export interface VideoSizeType {
      * Url where video can be found
      */
     url: number,
+
     /**
      * Video width
      */
     width: number,
+
     /**
      * Video height
      */
     height: number,
+
     /**
      * Video size
      */
@@ -144,7 +147,7 @@ export interface VideoHit {
      * Available sizes: 100x75, 200x150, 295x166, 640x360, 960x540, 1920x1080
      * Exampe: https://i.vimeocdn.com/video/529927645_295x166.jpg
      */
-    picture_id: number,
+    picture_id: string,
 
     /**
      * Source page on Pixabay.
@@ -155,10 +158,12 @@ export interface VideoHit {
      * Tyoe of the video, film, serail ect.
      */
     type: string,
+
     /**
      * Comma separated list of video tags
      */
     tags: string,
+
     /**
      * video duration
      */
@@ -230,13 +235,7 @@ export interface ImageResponse {
     total: number;
 
     /**
-<<<<<<< HEAD
      * The number of videos accessible through the API. By default, the API is limited to return a maximum of 500 videos per query.
-=======
-
-     * The number of images accessible through the API. By default, the API is limited to return a maximum of
-     * 500 images per query.
->>>>>>> 973106a8380e3bd902ec98af378dcb52185f1b5e
      */
     totalHits: number;
 

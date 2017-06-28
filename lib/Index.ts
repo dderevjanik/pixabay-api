@@ -22,7 +22,10 @@ const searchImagesRequest = async (key: string, searchQuery: string, options: Im
     const requestData = {
         ...options,
         key,
-        q: QueryString.stringify(searchQuery),
+
+        // return undefined with ordianry sting like 'puppy'
+        // q: QueryString.stringify(searchQuery),
+        q: searchQuery,
     };
 
     if (validate) {
@@ -38,34 +41,55 @@ const searchImagesRequest = async (key: string, searchQuery: string, options: Im
     return responseData as ImageResponse;
 };
 
-const searchVideosRequest = async (authenticateKey: string, searchQuery: string, options: VideoRequest = {}, validate: boolean = true) => {
-    options.q = searchQuery;
-    options.key = authenticateKey;
+const searchVideosRequest = async (key: string, searchQuery: string, options: VideoRequest = {}, validate: boolean = true) => {
+    const requestData = {
+        ...options,
+        key,
+
+        // return undefined with ordianry sting like 'puppy'
+        // q: QueryString.stringify(searchQuery),
+        q: searchQuery,
+    };
+
     if (validate) {
         validateRequest(options);
     }
+
     const response = (await axios.post(PIXABAY_URL_VIDEOS + QueryString.stringify(options))).data;
     if (!response.hits && !response.total && !response.totalHits) {
-        // TODO: more descriptive error
-        throw new Error('bad response');
+        throw new Error(`BadResponse: hits total totalHits are missing. make sure that you have right access token.`);
     }
     return response as VideoResponse;
 };
 
 /**
- * Authenticate user. You'll no longer need to write auth key on every searchImages request
+ * Authenticate user. You'll no longer need to write auth key on every searchImages or searchVideos request
  * @param key - you can obtain your key by sign up on pixabay
  */
 export const authenticate = (key: string) => ({
     /**
      * Search for images on pixabay
      * @param searchQuery - search for image names, should not exceed 100 characters
-     * @param request - pixabay request options, for more information visit
+     * @param request - pixabay request options, for more information visit https://pixabay.com/api/docs/
      * @param validate - should validate request ? It'll throw an error if validation fail
      * @throws {BadResponse}
      */
     searchImages: async (searchQuery: string, request: ImageRequest = {}, validate: boolean = true) =>
         await searchImagesRequest(key, searchQuery, request, validate),
+
+    /**
+     * Search for videos on pixabay
+     * @param searchQuery - search for image names, should not exceed 100 characters
+     * @param request - pixabay request options, for more information visit https://pixabay.com/api/docs/
+     * @param validate - should validate request ? It'll throw an error if validation fail
+     * @throws {BadResponse}
+     */
     searchVideos: async (searchQuery: string, request: VideoRequest = {}, validate: boolean = true) =>
         await searchVideosRequest(key, searchQuery, request, validate),
 });
+
+const searchImages = authenticate('5742108-fe9cf15fad2e97b7952502be3');
+
+(async function () {
+    console.log(await searchImages.searchImages('puppy'));
+})();
