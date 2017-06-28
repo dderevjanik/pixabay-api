@@ -1,4 +1,4 @@
-import { ImageRequest } from './PixabayRequest';
+import { ImageRequest, VideoRequest } from './PixabayRequest';
 
 /**
  * Validate requests if all information provided in requests are valid
@@ -6,7 +6,7 @@ import { ImageRequest } from './PixabayRequest';
  * @param request - request to validate
  * @throws {BadRequest}
  */
-export const validateRequest = (request: ImageRequest) => {
+export const validateRequest = (request: ImageRequest | VideoRequest) => {
     if (request.q && request.q.length > 100) {
         throw new Error(`Bad Request: request.q: length = ${request.q.length}.Length should not exceed 100 characters`);
     }
