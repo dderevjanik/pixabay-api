@@ -10,24 +10,32 @@ const PIXABAY_URL_IMAGES = 'https://pixabay.com/api/?';
 const PIXABAY_URL_VIDEOS = 'https://pixabay.com/api/videos?';
 
 /**
- * Search for image on pixabay
- * @param authenticateKey - you can obtain your key by sign up on pixabay
+ * Search for images on pixabay
+ * @param key - you can obtain your authentication key by sign up on pixabay
  * @param searchQuery - search for image names, should not exceed 100 characters
- * @param request - pixabay request
+ * @param request - pixabay request options, for more information visit
  * @param validate - should validate request ? It'll throw an error if validation fail
+ * @throws {BadResponse}
  */
-const searchImagesRequest = async (authenticateKey: string, searchQuery: string, options: ImageRequest = {}, validate: boolean = true) => {
-    options.q = searchQuery;
-    options.key = authenticateKey;
+
+const searchImagesRequest = async (key: string, searchQuery: string, options: ImageRequest = {}, validate = true) => {
+    const requestData = {
+        ...options,
+        key,
+        q: QueryString.stringify(searchQuery),
+    };
+
     if (validate) {
-        validateRequest(options);
+        validateRequest(requestData);
     }
-    const response = (await axios.post(PIXABAY_URL_IMAGES + QueryString.stringify(options))).data;
-    if (!response.hits && !response.total && !response.totalHits) {
-        // TODO: more descriptive error
-        throw new Error('bad response');
+
+    const response = await axios.post(PIXABAY_URL_IMAGES + QueryString.stringify(requestData));
+    const responseData = response.data;
+
+    if (!responseData.hits && !responseData.total && !responseData.totalHits) {
+        throw new Error(`BadResponse: hits total totalHits are missing. make sure that you have right access token.`);
     }
-    return response as ImageResponse;
+    return responseData as ImageResponse;
 };
 
 const searchVideosRequest = async (authenticateKey: string, searchQuery: string, options: VideoRequest = {}, validate: boolean = true) => {
@@ -45,14 +53,16 @@ const searchVideosRequest = async (authenticateKey: string, searchQuery: string,
 };
 
 /**
- * Authenticate user. You'll no longer need to write auth key on every request call
+ * Authenticate user. You'll no longer need to write auth key on every searchImages request
  * @param key - you can obtain your key by sign up on pixabay
  */
 export const authenticate = (key: string) => ({
     /**
-     * Search for image son pixabay
-     * @param request - pixabay request
+     * Search for images on pixabay
+     * @param searchQuery - search for image names, should not exceed 100 characters
+     * @param request - pixabay request options, for more information visit
      * @param validate - should validate request ? It'll throw an error if validation fail
+     * @throws {BadResponse}
      */
     searchImages: async (searchQuery: string, request: ImageRequest = {}, validate: boolean = true) =>
         await searchImagesRequest(key, searchQuery, request, validate),

@@ -42,37 +42,40 @@ var ValidateRequest_1 = require("./ValidateRequest");
 var PIXABAY_URL_IMAGES = 'https://pixabay.com/api/?';
 var PIXABAY_URL_VIDEOS = 'https://pixabay.com/api/videos?';
 /**
- * Search for image on pixabay
- * @param authenticateKey - you can obtain your key by sign up on pixabay
+ * Search for images on pixabay
+ * @param key - you can obtain your authentication key by sign up on pixabay
  * @param searchQuery - search for image names, should not exceed 100 characters
  * @param request - pixabay request
  * @param validate - should validate request ? It'll throw an error if validation fail
+ * @throws {BadResponse}
  */
-var searchImagesRequest = function (authenticateKey, searchQuery, options, validate) {
+var searchImagesRequest = function (key, searchQuery, options, validate) {
     if (options === void 0) { options = {}; }
     if (validate === void 0) { validate = true; }
     return __awaiter(_this, void 0, void 0, function () {
-        var response;
+        var response, responseData;
         return __generator(this, function (_a) {
             switch (_a.label) {
                 case 0:
-                    options.q = searchQuery;
-                    options.key = authenticateKey;
+
+                    options.q = QueryString.stringify(searchQuery);
+                    options.key = key;
                     if (validate) {
                         ValidateRequest_1.validateRequest(options);
                     }
                     return [4 /*yield*/, axios_1.default.post(PIXABAY_URL_IMAGES + QueryString.stringify(options))];
                 case 1:
-                    response = (_a.sent()).data;
-                    if (!response.hits && !response.total && !response.totalHits) {
-                        // TODO: more descriptive error
-                        throw new Error('bad response');
+                    response = _a.sent();
+                    responseData = response.data;
+                    if (!responseData.hits && !responseData.total && !responseData.totalHits) {
+                        throw new Error("BadResponse: hits total totalHits are missing. make sure that you have right access token.");
                     }
-                    return [2 /*return*/, response];
+                    return [2 /*return*/, responseData];
             }
         });
     });
 };
+
 var searchVideosRequest = function (authenticateKey, searchQuery, options, validate) {
     if (options === void 0) { options = {}; }
     if (validate === void 0) { validate = true; }
@@ -118,6 +121,7 @@ exports.authenticate = function (key) { return ({
             }
         }); });
     },
+
     searchVideos: function (searchQuery, request, validate) {
         if (request === void 0) { request = {}; }
         if (validate === void 0) { validate = true; }

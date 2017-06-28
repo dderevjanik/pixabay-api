@@ -1,5 +1,7 @@
 # Pixabay-api
 
+![travis_badge](https://travis-ci.org/dderevjanik/pixabay-api.svg?branch=master)
+
 All images and videos on Pixabay are released free of copyrights under Creative Commons CC0. You may download, modify, distribute, and use them royalty free for anything you like, even in commercial applications. Attribution is not required.
 
 Pixabay API docs:  [https://pixabay.com/api/docs/](https://pixabay.com/api/docs/)
@@ -20,7 +22,7 @@ Basic example
 ```js
 import { searchImages } from 'pixabay-api';
 
-searchImages('auth_key', 'puppy');
+searchImages('auth_key', 'puppy').then((r) => console.log(r));
 // { totalHits: 500,
 //   hits:
 //    [ { previewHeight: 99,
@@ -49,18 +51,18 @@ searchImages('auth_key', 'puppy');
 // }
 ```
 
-Bad value for some props will throw an error
+Bad values for some props will throw an error
 
 ```js
-searchImages('auth_key', 'puppy', {per_page: 203});
+await searchImages('auth_key', 'puppy', {per_page: 203});
 // will throw an error:
 // Error: Request.per_page: '203', but accepted values  3 - 200
 ```
 
-To silent those errors, turn validate off
+To suppress those errors, turn off validation
 
 ```js
-searchImages('auth_key', 'puppy', {per_page: 203}, false);
+await searchImages('auth_key', 'puppy', {per_page: 203}, false);
 // Will return bad http request, no error
 ```
 
@@ -70,7 +72,20 @@ with **Authenticate** you no longer need to add auth_key within `searchImages`
 import { authenticate } from 'pixabay-api';
 
 const { searchImages } = authenticate('auth_key');
-searchImages('puppy'); // no need to add auth_key
-searchImages('birthday cake');  // no need to add auth_key
+await searchImages('puppy'); // no need to add auth_key
+await searchImages('birthday cake', {per_page: 20});  // no need to add auth_key
 
 ```
+
+## FAQ
+
+### How to obtain Authenticate Key ?
+
+[sign up on pixabay.com](https://pixabay.com/en/accounts/register/)
+
+### I cannot get response from searchImages or searchVideos
+
+Probably you forget to add *auth_key* or you have bad one. First, make
+sure that you have right *auth_key* by pasting this code (with your auth_key)
+`https://pixabay.com/api/?key={ KEY }&response_group=high_resolution&q=yellow+flower`
+in browser, you should see response similar to one in Example section.
