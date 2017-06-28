@@ -2,9 +2,12 @@ import axios from 'axios';
 import * as QueryString from 'querystring';
 import { ImageRequest } from './PixabayRequest';
 import { ImageResponse } from './PixabayResponse';
+import { VideoRequest } from './PixabayRequest';
+import { VideoResponse } from './PixabayResponse';
 import { validateRequest } from './ValidateRequest';
 
-const PIXABAY_URL = 'https://pixabay.com/api/?';
+const PIXABAY_URL_IMAGES = 'https://pixabay.com/api/?';
+const PIXABAY_URL_VIDEOS = 'https://pixabay.com/api/videos?';
 
 /**
  * Search for image on pixabay
@@ -14,12 +17,12 @@ const PIXABAY_URL = 'https://pixabay.com/api/?';
  * @param validate - should validate request ? It'll throw an error if validation fail
  */
 const searchImagesRequest = async (authenticateKey: string, searchQuery: string, options: ImageRequest = {}, validate: boolean = true) => {
-    options.q = QueryString.stringify(searchQuery);
+    options.q = searchQuery;
     options.key = authenticateKey;
     if (validate) {
         validateRequest(options);
     }
-    const response = (await axios.post(PIXABAY_URL + QueryString.stringify(options))).data;
+    const response = (await axios.post(PIXABAY_URL_IMAGES + QueryString.stringify(options))).data;
     if (!response.hits && !response.total && !response.totalHits) {
         // TODO: more descriptive error
         throw new Error('bad response');
@@ -27,12 +30,19 @@ const searchImagesRequest = async (authenticateKey: string, searchQuery: string,
     return response as ImageResponse;
 };
 
-// TODO: Finish search video request
-// const searchVideosRequest = (authenticateKey: string, request: VideoRequest, validate: boolean = true) => {
-//     if (validate) {
-//         validateRequest(request);
-//     }
-// };
+const searchVideosRequest = async (authenticateKey: string, searchQuery: string, options: VideoRequest = {}, validate: boolean = true) => {
+    options.q = searchQuery;
+    options.key = authenticateKey;
+    if (validate) {
+        validateRequest(options);
+    }
+    const response = (await axios.post(PIXABAY_URL_VIDEOS + QueryString.stringify(options))).data;
+    if (!response.hits && !response.total && !response.totalHits) {
+        // TODO: more descriptive error
+        throw new Error('bad response');
+    }
+    return response as VideoResponse;
+};
 
 /**
  * Authenticate user. You'll no longer need to write auth key on every request call
@@ -46,10 +56,6 @@ export const authenticate = (key: string) => ({
      */
     searchImages: async (searchQuery: string, request: ImageRequest = {}, validate: boolean = true) =>
         await searchImagesRequest(key, searchQuery, request, validate),
-    // TODO: Add search for videos request
-    // searchVideosRequest:
+    searchVideos: async (searchQuery: string, request: VideoRequest = {}, validate: boolean = true) =>
+        await searchVideosRequest(key, searchQuery, request, validate),
 });
-
-// export const searchVideos = searchVideosRequest;
-
-export const searchImages = searchImagesRequest;

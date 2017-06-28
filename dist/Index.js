@@ -39,7 +39,8 @@ Object.defineProperty(exports, "__esModule", { value: true });
 var axios_1 = require("axios");
 var QueryString = require("querystring");
 var ValidateRequest_1 = require("./ValidateRequest");
-var PIXABAY_URL = 'https://pixabay.com/api/?';
+var PIXABAY_URL_IMAGES = 'https://pixabay.com/api/?';
+var PIXABAY_URL_VIDEOS = 'https://pixabay.com/api/videos?';
 /**
  * Search for image on pixabay
  * @param authenticateKey - you can obtain your key by sign up on pixabay
@@ -55,12 +56,12 @@ var searchImagesRequest = function (authenticateKey, searchQuery, options, valid
         return __generator(this, function (_a) {
             switch (_a.label) {
                 case 0:
-                    options.q = QueryString.stringify(searchQuery);
+                    options.q = searchQuery;
                     options.key = authenticateKey;
                     if (validate) {
                         ValidateRequest_1.validateRequest(options);
                     }
-                    return [4 /*yield*/, axios_1.default.post(PIXABAY_URL + QueryString.stringify(options))];
+                    return [4 /*yield*/, axios_1.default.post(PIXABAY_URL_IMAGES + QueryString.stringify(options))];
                 case 1:
                     response = (_a.sent()).data;
                     if (!response.hits && !response.total && !response.totalHits) {
@@ -72,53 +73,60 @@ var searchImagesRequest = function (authenticateKey, searchQuery, options, valid
         });
     });
 };
-// TODO: Finish search video request
-// const searchVideosRequest = (authenticateKey: string, request: VideoRequest, validate: boolean = true) => {
-//     if (validate) {
-//         validateRequest(request);
-//     }
-// };
+var searchVideosRequest = function (authenticateKey, searchQuery, options, validate) {
+    if (options === void 0) { options = {}; }
+    if (validate === void 0) { validate = true; }
+    return __awaiter(_this, void 0, void 0, function () {
+        var response;
+        return __generator(this, function (_a) {
+            switch (_a.label) {
+                case 0:
+                    options.q = searchQuery;
+                    options.key = authenticateKey;
+                    if (validate) {
+                        ValidateRequest_1.validateRequest(options);
+                    }
+                    return [4 /*yield*/, axios_1.default.post(PIXABAY_URL_VIDEOS + QueryString.stringify(options))];
+                case 1:
+                    response = (_a.sent()).data;
+                    if (!response.hits && !response.total && !response.totalHits) {
+                        // TODO: more descriptive error
+                        throw new Error('bad response');
+                    }
+                    return [2 /*return*/, response];
+            }
+        });
+    });
+};
 /**
  * Authenticate user. You'll no longer need to write auth key on every request call
  * @param key - you can obtain your key by sign up on pixabay
  */
-exports.authenticate = function (key) { return __awaiter(_this, void 0, void 0, function () {
-    var _this = this;
-    return __generator(this, function (_a) {
-        return [2 /*return*/, ({
-                /**
-                 * Search for image son pixabay
-                 * @param request - pixabay request
-                 * @param validate - should validate request ? It'll throw an error if validation fail
-                 */
-                searchImagesRequest: function (searchQuery, request, validate) {
-                    if (request === void 0) { request = {}; }
-                    if (validate === void 0) { validate = true; }
-                    return __awaiter(_this, void 0, void 0, function () { return __generator(this, function (_a) {
-                        switch (_a.label) {
-                            case 0: return [4 /*yield*/, searchImagesRequest(key, searchQuery, request, validate)];
-                            case 1: return [2 /*return*/, _a.sent()];
-                        }
-                    }); });
-                },
-            })];
-    });
-}); };
-// export const searchVideos = searchVideosRequest;
-exports.searchImages = searchImagesRequest;
-(function () {
-    return __awaiter(this, void 0, void 0, function () {
-        var _a, _b;
-        return __generator(this, function (_c) {
-            switch (_c.label) {
-                case 0:
-                    _b = (_a = console).log;
-                    return [4 /*yield*/, exports.searchImages('5742108-fe9cf15fad2e97b7952502be3', 'big cake')];
-                case 1:
-                    _b.apply(_a, [_c.sent()]);
-                    return [2 /*return*/];
+exports.authenticate = function (key) { return ({
+    /**
+     * Search for image son pixabay
+     * @param request - pixabay request
+     * @param validate - should validate request ? It'll throw an error if validation fail
+     */
+    searchImages: function (searchQuery, request, validate) {
+        if (request === void 0) { request = {}; }
+        if (validate === void 0) { validate = true; }
+        return __awaiter(_this, void 0, void 0, function () { return __generator(this, function (_a) {
+            switch (_a.label) {
+                case 0: return [4 /*yield*/, searchImagesRequest(key, searchQuery, request, validate)];
+                case 1: return [2 /*return*/, _a.sent()];
             }
-        });
-    });
-})();
+        }); });
+    },
+    searchVideos: function (searchQuery, request, validate) {
+        if (request === void 0) { request = {}; }
+        if (validate === void 0) { validate = true; }
+        return __awaiter(_this, void 0, void 0, function () { return __generator(this, function (_a) {
+            switch (_a.label) {
+                case 0: return [4 /*yield*/, searchVideosRequest(key, searchQuery, request, validate)];
+                case 1: return [2 /*return*/, _a.sent()];
+            }
+        }); });
+    },
+}); };
 //# sourceMappingURL=Index.js.map

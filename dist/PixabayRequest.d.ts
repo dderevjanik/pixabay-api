@@ -93,3 +93,70 @@ export interface ImageRequest extends BaseRequest {
      */
     per_page?: number;
 }
+export interface VideoRequest extends BaseRequest {
+    /**
+     * A URL encoded search term. If omitted, all videos are returned. This value may not exceed 100 characters.
+     * Example: "yellow+flower"
+     */
+    q?: string;
+    /**
+     * Language code of the language to be searched in.
+     * Accepted values: cs, da, de, en, es, fr, id, it, hu, nl, no, pl, pt, ro, sk, fi, sv, tr, vi, th, bg, ru, el, ja, ko, zh
+     * Default: "en"
+     */
+    lang?: string;
+    /**
+     * ID or a comma separated list of values for retrieving specific videos.
+     */
+    id?: string;
+    /**	str	Filter results by video type.
+     * Accepted values: "all", "film", "animation"
+     * Default: "all"
+     */
+    video_type?: string;
+    /**
+     * Filter results by category.
+     * Accepted values: fashion, nature, backgrounds, science, education, people, feelings, religion, health, places, animals,
+     * industry, food, computer, sports, transportation, travel, buildings, business, music
+     */
+    category?: string;
+    /**
+     * Minimum video width.
+     * Default: "0"
+     */
+    min_width?: number;
+    /**
+     * Minimum video height.
+     * Default: "0"
+     */
+    min_height?: number;
+    /**
+     * Select videos that have received an Editor's Choice award.
+     * Accepted values: "true", "false"
+     * Default: "false"
+     */
+    editors_choice?: boolean;
+    /**
+     * A flag indicating that only videos suitable for all ages should be returned.
+     * Accepted values: "true", "false"
+     * Default: "false"
+     */
+    safesearch?: boolean;
+    /**
+     * How the results should be ordered.
+     * Accepted values: "popular", "latest"
+     * Default: "popular"
+     */
+    order?: string;
+    /**
+     * Returned search results are paginated.Use this parameter to select the page number.
+     * Default: 1
+     */
+    page?: number;
+    /**
+     * Determine the number of results per page.
+     * Accepted values: 3 - 200
+     * Default: 20
+     */
+    per_page?: number;
+}
