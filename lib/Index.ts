@@ -1,7 +1,7 @@
 import axios from 'axios';
 import * as QueryString from 'querystring';
-import { VideoRequest, ImageRequest } from './PixabayRequest';
-import { VideoResponse, ImageResponse } from './PixabayResponse';
+import { ImageRequest, VideoRequest } from './PixabayRequest';
+import { ImageResponse, VideoResponse } from './PixabayResponse';
 import { validateRequest } from './ValidateRequest';
 
 const PIXABAY_URL_IMAGES = 'https://pixabay.com/api/?';
@@ -10,20 +10,16 @@ const PIXABAY_URL_VIDEOS = 'https://pixabay.com/api/videos?';
 /**
  * Search for images on pixabay
  * @param key - you can obtain your authentication key by sign up on pixabay
- * @param searchQuery - search for image names, should not exceed 100 characters
- * @param request - pixabay request options, for more information visit
+ * @param query - search for image names, should not exceed 100 characters
+ * @param options - pixabay request options, for more information visit
  * @param validate - should validate request ? It'll throw an error if validation fail
  * @throws {BadResponse}
  */
-
-const searchImagesRequest = async (key: string, searchQuery: string, options: ImageRequest = {}, validate = true) => {
+const searchImagesReq = async (key: string, query: string, options: ImageRequest = {}, validate = true) => {
     const requestData = {
         ...options,
         key,
-
-        // return undefined with ordianry sting like 'puppy'
-        // q: QueryString.stringify(searchQuery),
-        q: searchQuery,
+        q: query,
     };
 
     if (validate) {
@@ -39,14 +35,19 @@ const searchImagesRequest = async (key: string, searchQuery: string, options: Im
     return responseData as ImageResponse;
 };
 
-const searchVideosRequest = async (key: string, searchQuery: string, options: VideoRequest = {}, validate: boolean = true) => {
+/**
+ * Search for images on pixabay
+ * @param key - you can obtain your authentication key by sign up on pixabay
+ * @param query - search for video names, should not exceed 100 characters
+ * @param options - pixabay request options, for more information visit
+ * @param validate - should validate request ? It'll throw an error if validation fail
+ * @throws {BadResponse}
+ */
+const searchVideosReq = async (key: string, query: string, options: VideoRequest = {}, validate: boolean = true) => {
     const requestData = {
         ...options,
         key,
-
-        // return undefined with ordianry sting like 'puppy'
-        // q: QueryString.stringify(searchQuery),
-        q: searchQuery,
+        q: query,
     };
 
     if (validate) {
@@ -67,27 +68,24 @@ const searchVideosRequest = async (key: string, searchQuery: string, options: Vi
 export const authenticate = (key: string) => ({
     /**
      * Search for images on pixabay
-     * @param searchQuery - search for image names, should not exceed 100 characters
-     * @param request - pixabay request options, for more information visit https://pixabay.com/api/docs/
+     * @param query - search for image names, should not exceed 100 characters
+     * @param options - pixabay request options, for more information visit https://pixabay.com/api/docs/
      * @param validate - should validate request ? It'll throw an error if validation fail
      * @throws {BadResponse}
      */
-    searchImages: async (searchQuery: string, request: ImageRequest = {}, validate: boolean = true) =>
-        await searchImagesRequest(key, searchQuery, request, validate),
+    searchImages: async (query: string, options: ImageRequest = {}, validate: boolean = true) =>
+        await searchImagesReq(key, query, options, validate),
 
     /**
      * Search for videos on pixabay
-     * @param searchQuery - search for image names, should not exceed 100 characters
-     * @param request - pixabay request options, for more information visit https://pixabay.com/api/docs/
+     * @param query - search for video names, should not exceed 100 characters
+     * @param options - pixabay request options, for more information visit https://pixabay.com/api/docs/
      * @param validate - should validate request ? It'll throw an error if validation fail
      * @throws {BadResponse}
      */
-    searchVideos: async (searchQuery: string, request: VideoRequest = {}, validate: boolean = true) =>
-        await searchVideosRequest(key, searchQuery, request, validate),
+    searchVideos: async (query: string, options: VideoRequest = {}, validate: boolean = true) =>
+        await searchVideosReq(key, query, options, validate),
 });
 
-const searchImages = authenticate('5742108-fe9cf15fad2e97b7952502be3');
-
-(async function () {
-    console.log(await searchImages.searchImages('puppy'));
-})();
+export const searchImages = searchImagesReq;
+export const searchVideos = searchVideosReq;

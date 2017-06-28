@@ -52,12 +52,12 @@ var PIXABAY_URL_VIDEOS = 'https://pixabay.com/api/videos?';
 /**
  * Search for images on pixabay
  * @param key - you can obtain your authentication key by sign up on pixabay
- * @param searchQuery - search for image names, should not exceed 100 characters
- * @param request - pixabay request options, for more information visit
+ * @param query - search for image names, should not exceed 100 characters
+ * @param options - pixabay request options, for more information visit
  * @param validate - should validate request ? It'll throw an error if validation fail
  * @throws {BadResponse}
  */
-var searchImagesRequest = function (key, searchQuery, options, validate) {
+var searchImagesReq = function (key, query, options, validate) {
     if (options === void 0) { options = {}; }
     if (validate === void 0) { validate = true; }
     return __awaiter(_this, void 0, void 0, function () {
@@ -65,10 +65,7 @@ var searchImagesRequest = function (key, searchQuery, options, validate) {
         return __generator(this, function (_a) {
             switch (_a.label) {
                 case 0:
-                    requestData = __assign({}, options, { key: key, 
-                        // return undefined with ordianry sting like 'puppy'
-                        // q: QueryString.stringify(searchQuery),
-                        q: searchQuery });
+                    requestData = __assign({}, options, { key: key, q: query });
                     if (validate) {
                         ValidateRequest_1.validateRequest(requestData);
                     }
@@ -84,7 +81,15 @@ var searchImagesRequest = function (key, searchQuery, options, validate) {
         });
     });
 };
-var searchVideosRequest = function (key, searchQuery, options, validate) {
+/**
+ * Search for images on pixabay
+ * @param key - you can obtain your authentication key by sign up on pixabay
+ * @param query - search for video names, should not exceed 100 characters
+ * @param options - pixabay request options, for more information visit
+ * @param validate - should validate request ? It'll throw an error if validation fail
+ * @throws {BadResponse}
+ */
+var searchVideosReq = function (key, query, options, validate) {
     if (options === void 0) { options = {}; }
     if (validate === void 0) { validate = true; }
     return __awaiter(_this, void 0, void 0, function () {
@@ -92,10 +97,7 @@ var searchVideosRequest = function (key, searchQuery, options, validate) {
         return __generator(this, function (_a) {
             switch (_a.label) {
                 case 0:
-                    requestData = __assign({}, options, { key: key, 
-                        // return undefined with ordianry sting like 'puppy'
-                        // q: QueryString.stringify(searchQuery),
-                        q: searchQuery });
+                    requestData = __assign({}, options, { key: key, q: query });
                     if (validate) {
                         ValidateRequest_1.validateRequest(options);
                     }
@@ -117,53 +119,39 @@ var searchVideosRequest = function (key, searchQuery, options, validate) {
 exports.authenticate = function (key) { return ({
     /**
      * Search for images on pixabay
-     * @param searchQuery - search for image names, should not exceed 100 characters
-     * @param request - pixabay request options, for more information visit https://pixabay.com/api/docs/
+     * @param query - search for image names, should not exceed 100 characters
+     * @param options - pixabay request options, for more information visit https://pixabay.com/api/docs/
      * @param validate - should validate request ? It'll throw an error if validation fail
      * @throws {BadResponse}
      */
-    searchImages: function (searchQuery, request, validate) {
-        if (request === void 0) { request = {}; }
+    searchImages: function (query, options, validate) {
+        if (options === void 0) { options = {}; }
         if (validate === void 0) { validate = true; }
         return __awaiter(_this, void 0, void 0, function () { return __generator(this, function (_a) {
             switch (_a.label) {
-                case 0: return [4 /*yield*/, searchImagesRequest(key, searchQuery, request, validate)];
+                case 0: return [4 /*yield*/, searchImagesReq(key, query, options, validate)];
                 case 1: return [2 /*return*/, _a.sent()];
             }
         }); });
     },
     /**
      * Search for videos on pixabay
-     * @param searchQuery - search for image names, should not exceed 100 characters
-     * @param request - pixabay request options, for more information visit https://pixabay.com/api/docs/
+     * @param query - search for video names, should not exceed 100 characters
+     * @param options - pixabay request options, for more information visit https://pixabay.com/api/docs/
      * @param validate - should validate request ? It'll throw an error if validation fail
      * @throws {BadResponse}
      */
-    searchVideos: function (searchQuery, request, validate) {
-        if (request === void 0) { request = {}; }
+    searchVideos: function (query, options, validate) {
+        if (options === void 0) { options = {}; }
         if (validate === void 0) { validate = true; }
         return __awaiter(_this, void 0, void 0, function () { return __generator(this, function (_a) {
             switch (_a.label) {
-                case 0: return [4 /*yield*/, searchVideosRequest(key, searchQuery, request, validate)];
+                case 0: return [4 /*yield*/, searchVideosReq(key, query, options, validate)];
                 case 1: return [2 /*return*/, _a.sent()];
             }
         }); });
     },
 }); };
-var searchImages = exports.authenticate('5742108-fe9cf15fad2e97b7952502be3');
-(function () {
-    return __awaiter(this, void 0, void 0, function () {
-        var _a, _b;
-        return __generator(this, function (_c) {
-            switch (_c.label) {
-                case 0:
-                    _b = (_a = console).log;
-                    return [4 /*yield*/, searchImages.searchImages('puppy')];
-                case 1:
-                    _b.apply(_a, [_c.sent()]);
-                    return [2 /*return*/];
-            }
-        });
-    });
-})();
+exports.searchImages = searchImagesReq;
+exports.searchVideos = searchVideosReq;
 //# sourceMappingURL=Index.js.map

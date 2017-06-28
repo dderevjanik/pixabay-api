@@ -95,13 +95,14 @@ export interface ImageRequest extends BaseRequest {
 }
 export interface VideoRequest extends BaseRequest {
     /**
-     * A URL encoded search term. If omitted, all videos are returned. This value may not exceed 100 characters.
+     * A URL encoded search term.If omitted, all videos are returned.This value may not exceed 100 characters.
      * Example: "yellow+flower"
      */
     q?: string;
     /**
      * Language code of the language to be searched in.
-     * Accepted values: cs, da, de, en, es, fr, id, it, hu, nl, no, pl, pt, ro, sk, fi, sv, tr, vi, th, bg, ru, el, ja, ko, zh
+     * Accepted values: cs, da, de, en, es, fr, id, it, hu, nl, no, pl, pt, ro, sk, fi, sv, tr, vi, th, bg, ru, el, ja,
+     * ko, zh
      * @default "en"
      */
     lang?: string;
@@ -117,8 +118,8 @@ export interface VideoRequest extends BaseRequest {
     video_type?: string;
     /**
      * Filter results by category.
-     * Accepted values: fashion, nature, backgrounds, science, education, people, feelings, religion, health, places, animals,
-     * industry, food, computer, sports, transportation, travel, buildings, business, music
+     * Accepted values: fashion, nature, backgrounds, science, education, people, feelings, religion, health, places,
+     * animals, industry, food, computer, sports, transportation, travel, buildings, business, music
      */
     category?: string;
     /**

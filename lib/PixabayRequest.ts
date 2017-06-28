@@ -109,82 +109,82 @@ export interface ImageRequest extends BaseRequest {
 }
 
 export interface VideoRequest extends BaseRequest {
-
-	/**
-     * A URL encoded search term. If omitted, all videos are returned. This value may not exceed 100 characters.
+    /**
+     * A URL encoded search term.If omitted, all videos are returned.This value may not exceed 100 characters.
      * Example: "yellow+flower"
      */
-    q?: string
+    q?: string;
 
     /**
      * Language code of the language to be searched in.
-     * Accepted values: cs, da, de, en, es, fr, id, it, hu, nl, no, pl, pt, ro, sk, fi, sv, tr, vi, th, bg, ru, el, ja, ko, zh
+     * Accepted values: cs, da, de, en, es, fr, id, it, hu, nl, no, pl, pt, ro, sk, fi, sv, tr, vi, th, bg, ru, el, ja,
+     * ko, zh
      * @default "en"
      */
-    lang?: string
+    lang?: string;
 
     /**
      * ID or a comma separated list of values for retrieving specific videos.
      */
-    id?: string
+    id?: string;
 
     /**
      * Filter results by video type.
      * Accepted values: "all", "film", "animation"
      * @default "all"
      */
-    video_type?: string
+    video_type?: string;
 
     /**
      * Filter results by category.
-     * Accepted values: fashion, nature, backgrounds, science, education, people, feelings, religion, health, places, animals,
-     * industry, food, computer, sports, transportation, travel, buildings, business, music
+     * Accepted values: fashion, nature, backgrounds, science, education, people, feelings, religion, health, places,
+     * animals, industry, food, computer, sports, transportation, travel, buildings, business, music
      */
-    category?: string
+    category?: string;
 
     /**
      * Minimum video width.
      * @default: 0
      */
-    min_width?: number
+    min_width?: number;
 
     /**
      * Minimum video height.
      * @default 0
      */
-    min_height?: number
+    min_height?: number;
 
     /**
      * Select videos that have received an Editor's Choice award.
      * Accepted values: "true", "false"
      * @default false
      */
-    editors_choice?: boolean
+    editors_choice?: boolean;
 
     /**
      * A flag indicating that only videos suitable for all ages should be returned.
      * Accepted values: "true", "false"
      * @default false
      */
-    safesearch?: boolean
+    safesearch?: boolean;
 
     /**
      * How the results should be ordered.
      * Accepted values: "popular", "latest"
      * @default "popular"
      */
-    order?: string
+    order?: string;
 
     /**
      * Returned search results are paginated.Use this parameter to select the page number.
      * @default: 1
      */
-    page?: number
+    page?: number;
 
     /**
      * Determine the number of results per page.
      * Accepted values: 3 - 200
      * @default 20
      */
-    per_page?: number
+    per_page?: number;
 }

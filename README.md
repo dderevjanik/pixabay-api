@@ -22,7 +22,7 @@ Basic example
 ```js
 import { searchImages } from 'pixabay-api';
 
-searchImages('auth_key', 'puppy').then((r) => console.log(r));
+searchImages(AUTH_KEY, 'puppy').then((r) => console.log(r));
 // { totalHits: 500,
 //   hits:
 //    [ { previewHeight: 99,
@@ -51,10 +51,18 @@ searchImages('auth_key', 'puppy').then((r) => console.log(r));
 // }
 ```
 
+Searching for videos has same interface as searching for images
+
+```js
+import { searchImages } from 'pixabay-api';
+
+searchVideos(AUTH_KEY, 'puppy');
+```
+
 Bad values for some props will throw an error
 
 ```js
-await searchImages('auth_key', 'puppy', {per_page: 203});
+await searchImages(AUTH_KEY, 'puppy', {per_page: 203});
 // will throw an error:
 // Error: Request.per_page: '203', but accepted values  3 - 200
 ```
@@ -62,7 +70,7 @@ await searchImages('auth_key', 'puppy', {per_page: 203});
 To suppress those errors, turn off validation
 
 ```js
-await searchImages('auth_key', 'puppy', {per_page: 203}, false);
+await searchImages(AUTH_KEY, 'puppy', {per_page: 203}, false);
 // Will return bad http request, no error
 ```
 
@@ -71,9 +79,10 @@ with **Authenticate** you no longer need to add auth_key within `searchImages`
 ```js
 import { authenticate } from 'pixabay-api';
 
-const { searchImages } = authenticate('auth_key');
+const { searchImages, searchVideos } = authenticate(AUTH_KEY);
 await searchImages('puppy'); // no need to add auth_key
 await searchImages('birthday cake', {per_page: 20});  // no need to add auth_key
+await searchVideos('dog'); // no need to add auth key
 
 ```
 
@@ -89,3 +98,7 @@ Probably you forget to add *auth_key* or you have bad one. First, make
 sure that you have right *auth_key* by pasting this code (with your auth_key)
 `https://pixabay.com/api/?key={ KEY }&response_group=high_resolution&q=yellow+flower`
 in browser, you should see response similar to one in Example section.
+
+### How to retrieve high resolution images ?
+
+[request full api access](https://pixabay.com/api/docs/#api_support)

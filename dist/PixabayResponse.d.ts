@@ -139,11 +139,14 @@ export interface VideoHit {
      */
     duration: number;
     /**
-     *	A set of differently sizes video streams:
-     * "large" usually has a dimension of 1920x1080. If a large video version is not available, an empty URL value and a size of zero is returned.
-     * "medium" typically has a dimension of 1280x720 and is available for all Pixabay videos.
-     * "small" typically has a dimension of 960x540, older videos have a dimension of 640x360. This size is available for all videos.
-     * "tiny" typically has a dimension of 640x360, older videos have a dimension of 480x270. This size is available for all videos.
+     * A set of differently sizes video streams:
+     * "large": usually has a dimension of 1920x1080. If a large video version is not available, an empty URL value and
+     * a size of zero is returned.
+     * "medium": typically has a dimension of 1280x720 and is available for all Pixabay videos.
+     * "small" typically has a dimension of 960x540, older videos have a dimension of 640x360.
+     * This size is available for all videos.
+     * "tiny" typically has a dimension of 640x360, older videos have a dimension of 480x270.
+     * This size is available for all videos.
      * Append the GET parameter "download=1" to any of the video stream URLs to have them served as downloads.
      */
     videos: {
@@ -153,19 +156,19 @@ export interface VideoHit {
         tiny: VideoSizeType;
     };
     /**
-     *Total number of views.
+     * Total number of views.
      */
     views: number;
     /**
-     *	Total number of downloads.
+     * Total number of downloads.
      */
     downloads: number;
     /**
-     *Total number of favorites.
+     * Total number of favorites.
      */
     favorites: number;
     /**
-     *	Total number of likes.
+     * Total number of likes.
      */
     likes: number;
     /**
@@ -194,7 +197,8 @@ export interface ImageResponse {
      */
     total: number;
     /**
-     * The number of videos accessible through the API. By default, the API is limited to return a maximum of 500 videos per query.
+     * The number of videos accessible through the API. By default, the API is limited to return a
+     * maximum of 500 videos per query.
      */
     totalHits: number;
     /**
@@ -211,7 +215,8 @@ export interface VideoResponse {
      */
     total: number;
     /**
-     * The number of videos accessible through the API. By default, the API is limited to return a maximum of 500 videos per query.
+     * The number of videos accessible through the API. By default, the API is limited to return a
+     * maximum of 500 videos per query.
      */
     totalHits: number;
     /**
