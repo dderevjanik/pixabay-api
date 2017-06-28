@@ -1,14 +1,15 @@
 // TODO: Add description
 export interface Hit {
     /**
-     * Image Id
+     * 	A unique identifier for updating expired image URLs
      */
     id: number;
 
     /**
-     * Url to image's page
+     * Source page on Pixabay, which provides a download link for the original image of the
+     * dimension imageWidth x imageHeight and the file size imageSize
      */
-    pageUrl: string;
+    pageURL: string;
 
     /**
      * Type of image
@@ -21,27 +22,34 @@ export interface Hit {
     tags: string;
 
     /**
-     * Url to image preview
+     * Low resolution images with a maximum width or height of 150 px (previewWidth x previewHeight)
      */
     previewUrl: string;
 
     /**
-     * Image preview width
+     * Preview image width
      */
     previewWidth: number;
 
     /**
-     * Image preview height
+     * Preview image height
      */
     previewHeight: number;
 
-    // TODO: Add description
+    /**
+     * 	Medium sized image with a maximum width or height of 640 px (webformatWidth x webformatHeight).
+     * URL valid for 24 hours.
+     */
     webformatURL: string;
 
-    // TODO: Add description
+    /**
+     * Web format width
+     */
     webformatWidth: number;
 
-    // TODO: Add description
+    /**
+     * Web format height
+     */
     webformatHeight: number;
 
     /**
@@ -60,55 +68,64 @@ export interface Hit {
     imageSize: number;
 
     /**
-     * Number of image views
+     * Total number of views
      */
     views: number;
 
     /**
-     * Number of image downloads
+     * 	Total number of downloads
      */
     downloads: number;
 
     /**
-     * Number of image favorites
+     * Total number of favorites
      */
     favorites: number;
 
     /**
-     * Number of image likes
+     * Total number of likes
      */
     likes: number;
 
     /**
-     * Number of image comments
+     * Total number of comments
      */
     comments: number;
 
     /**
-     * Created by user id
+     * User ID of the contributor. Profile URL: https://pixabay.com/users/{ USERNAME }-{ ID }
      */
     user_id: number;
 
     /**
-     * Username
+     * User name of the contributor. Profile URL: https://pixabay.com/users/{ USERNAME }-{ ID }
      */
     user: string;
 
     /**
-     * User logo
+     * Profile picture URL (250 x 250 px).
      */
     userImageURL: string;
 }
 
-// TODO: Add description
+/**
+ * Response for pixabay image search request
+ */
 export interface ImageResponse {
-    // TODO: Add description
+    /**
+     * The total number of hits.
+     */
     total: number;
 
-    // TODO: Add description
+    /**
+     * The number of images accessible through the API. By default, the API is limited to return a maximum of
+     * 500 images per query.
+     */
     totalHits: number;
 
-    // TODO: Add description
+    /**
+     * Array of hits
+     */
     hits: Hit[];
 }
 

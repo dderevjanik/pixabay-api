@@ -10,17 +10,21 @@ const PIXABAY_URL = 'https://pixabay.com/api/?';
  * Search for images on pixabay
  * @param key - you can obtain your authentication key by sign up on pixabay
  * @param searchQuery - search for image names, should not exceed 100 characters
- * @param request - pixabay request
+ * @param request - pixabay request options, for more information visit
  * @param validate - should validate request ? It'll throw an error if validation fail
  * @throws {BadResponse}
  */
 const searchImagesRequest = async (key: string, searchQuery: string, options: ImageRequest = {}, validate = true) => {
-    options.q = QueryString.stringify(searchQuery);
-    options.key = key;
+    const requestData = {
+        ...options,
+        key,
+        q: QueryString.stringify(searchQuery),
+    };
+
     if (validate) {
-        validateRequest(options);
+        validateRequest(requestData);
     }
-    const response = await axios.post(PIXABAY_URL + QueryString.stringify(options));
+    const response = await axios.post(PIXABAY_URL + QueryString.stringify(requestData));
     const responseData = response.data;
 
     if (!responseData.hits && !responseData.total && !responseData.totalHits) {
@@ -37,9 +41,11 @@ const searchImagesRequest = async (key: string, searchQuery: string, options: Im
  */
 export const authenticate = (key: string) => ({
     /**
-     * Search for image son pixabay
-     * @param request - pixabay request
+     * Search for images on pixabay
+     * @param searchQuery - search for image names, should not exceed 100 characters
+     * @param request - pixabay request options, for more information visit
      * @param validate - should validate request ? It'll throw an error if validation fail
+     * @throws {BadResponse}
      */
     searchImages: async (searchQuery: string, request: ImageRequest = {}, validate: boolean = true) =>
         await searchImagesRequest(key, searchQuery, request, validate),

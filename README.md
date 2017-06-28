@@ -76,3 +76,16 @@ await searchImages('puppy'); // no need to add auth_key
 await searchImages('birthday cake', {per_page: 20});  // no need to add auth_key
 
 ```
+
+## FAQ
+
+### How to obtain Authenticate Key ?
+
+[sign up on pixabay.com](https://pixabay.com/en/accounts/register/)
+
+### I cannot get response from searchImages or searchVideos
+
+Probably you forget to add *auth_key* or you have bad one. First, make
+sure that you have right *auth_key* by pasting this code (with your auth_key)
+`https://pixabay.com/api/?key={ KEY }&response_group=high_resolution&q=yellow+flower`
+in browser, you should see response similar to one in Example section.
