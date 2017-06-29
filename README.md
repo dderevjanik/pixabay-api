@@ -79,7 +79,7 @@ await searchImages('birthday cake', {per_page: 20});  // no need to add auth_key
 await searchVideos('dog'); // no need to add auth key
 ```
 
-### `searchVideos(key, query, options, validate = true)
+### `searchVideos(key, query, options, validate = true)`
 
 Searching for videos has same interface as `searchImages`
 
